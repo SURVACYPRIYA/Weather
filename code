@@ -1,0 +1,105 @@
+from tkinter import * 
+
+from tkinter import ttk 
+
+import requests 
+
+  
+
+root=Tk() 
+
+root.geometry("450x450") 
+
+root.title("Live Weather Application") 
+
+root.config(bg='#87CEFA') 
+
+  
+
+state_name=StringVar() 
+
+state_list=["Andhra Pradesh","Arunachal Pradesh ","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar Islands","Chandigarh","Dadra and Nagar Haveli","Daman and Diu","Lakshadweep","National Capital Territory of Delhi","Puducherry"] 
+
+En=ttk.Combobox(root,values=state_list,textvariable=state_name,font='Arial,50,bold') 
+
+En.place(x=100,y=60,height=30) 
+
+  
+
+lb=Label(root,text="Select State/City",font='Arial,20,bold',bg='#87CEFA') 
+
+lb.place(x=140,y=20) 
+
+lb1=Label(root,text="Weather",font='Arial,20,bold',bg='#87CEFA') 
+
+lb1.place(x=80,y=160) 
+
+lb2=Label(root,text="Wind",font='Arial,20,bold',bg='#87CEFA') 
+
+lb2.place(x=80,y=200) 
+
+lb3=Label(root,text="Temperature",font='Arial,20,bold',bg='#87CEFA') 
+
+lb3.place(x=80,y=240) 
+
+lb4=Label(root,text="Humidity",font='Arial,20,bold',bg='#87CEFA') 
+
+lb4.place(x=80,y=280) 
+
+lb5=Label(root,text="Pressure",font='Arial,20,bold',bg='#87CEFA') 
+
+lb5.place(x=80,y=320) 
+
+  
+
+lb11=Label(root,text=" ",font='Arial,20,bold',bg='#87CEFA',fg='#008B00') 
+
+lb11.place(x=265,y=160) 
+
+lb22=Label(root,text=" ",font='Arial,20,bold',bg='#87CEFA',fg='#008B00') 
+
+lb22.place(x=265,y=200) 
+
+lb33=Label(root,text=" ",font='Arial,20,bold',bg='#87CEFA',fg='#008B00') 
+
+lb33.place(x=265,y=240) 
+
+lb44=Label(root,text=" ",font='Arial,20,bold',bg='#87CEFA',fg='#008B00') 
+
+lb44.place(x=265,y=280) 
+
+lb55=Label(root,text=" ",font='Arial,20,bold',bg='#87CEFA',fg='#008B00') 
+
+lb55.place(x=265,y=320) 
+
+  
+
+  
+
+  
+
+def get_data(): 
+
+   state=state_name.get() 
+
+   data=requests.get("https://api.openweathermap.org/data/2.5/weather?q="+state+"&appid=f82ad94ba6dd3ef08c2f2f032ef25bd3").json() 
+
+   lb11.config(text=data["weather"][0]["main"]) 
+
+   lb22.config(text=data["wind"]["speed"]) 
+
+   lb33.config(text=str(int(data["main"]["temp"]-273))) 
+
+   lb44.config(text=data["main"]["humidity"]) 
+
+   lb55.config(text=data["main"]["pressure"]) 
+
+  
+
+    
+
+btn=Button(root,text="Check Weather",font='Arial,10,bold',bg='#E6E6FA',bd=5,command=get_data) 
+
+btn.place(x=140,y=370) 
+
+root.mainloop()  
